@@ -1,28 +1,20 @@
-<?php
-/**
- * The template for displaying the footer.
- *
- * Contains the body & html closing tags.
- *
- * @package HelloElementor
- */
+</main>
+<footer id="site-footer"> 
+    <div class="footer-content">
+        <hr class="custom-line">
+            <nav class="footer-navigation">
+                <ul class="footer-menu">
+                    <li><a href="<?php echo esc_url(home_url('/mentions-legales')); ?>">MENTIONS LÉGALES</a></li>
+                    <li><a href="<?php echo esc_url(get_privacy_policy_url()); ?>">VIE PRIVÉE</a></li>
+                    <li><a href="<?php echo esc_url(get_privacy_policy_url()); ?>">TOUT DROITS RÉSERVÉS</a></li>
+                </ul>
+            </nav>
+    </div>
+    <!-- footer.php -->
+    <?php get_template_part ('template-parts/contact');?>
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
-
-if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_location( 'footer' ) ) {
-	if ( hello_elementor_display_header_footer() ) {
-		if ( did_action( 'elementor/loaded' ) && hello_header_footer_experiment_active() ) {
-			get_template_part( 'template-parts/dynamic-footer' );
-		} else {
-			get_template_part( 'template-parts/footer' );
-		}
-	}
-}
-?>
-
-<?php wp_footer(); ?>
-
+</footer>
+    
+    <?php wp_footer() ?>
 </body>
 </html>
