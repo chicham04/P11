@@ -1,17 +1,19 @@
-<?php get_header(); ?>
-<main id="main" class="site-main" role="main">
-    <!-- Boucle WordPress pour afficher le contenu de la page -->
-    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php
+	get_header();
+	?>
+  
+  <div class="entry-content">
+        <?php
+            the_content();  // Affiche le contenu de la page
 
-            <h1><?php get_the_title(); ?></h1>
-            <section class="container">
-                <?php the_content(); ?>
-            </section>
+            wp_link_pages( array(  
+                'before' => '<div class="page-links">' . esc_html__('Pages:', 'textdomain'),
+                'after'  => '</div>',
+            ) );
+        ?>
+    </div><!-- .entry-content -->
 
-    <?php endwhile;
-    endif; ?>
-	
-</main>
 
+  
 
 <?php get_footer(); ?>

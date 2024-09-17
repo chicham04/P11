@@ -1,20 +1,35 @@
 </main>
-<footer id="site-footer"> 
-    <div class="footer-content">
+<footer  id="site-footer">
+<div class="footer-content">
         <hr class="custom-line">
             <nav class="footer-navigation">
                 <ul class="footer-menu">
-                    <li><a href="<?php echo esc_url(home_url('/mentions-legales')); ?>">MENTIONS LÉGALES</a></li>
-                    <li><a href="<?php echo esc_url(get_privacy_policy_url()); ?>">VIE PRIVÉE</a></li>
-                    <li><a href="<?php echo esc_url(get_privacy_policy_url()); ?>">TOUT DROITS RÉSERVÉS</a></li>
-                </ul>
-            </nav>
-    </div>
-    <!-- footer.php -->
-    <?php get_template_part ('template-parts/contact');?>
 
-</footer>
-    
-    <?php wp_footer() ?>
-</body>
-</html>
+                    <!-- Lien vers la page Mentions légales -->
+                    <li><a href="<?php echo get_permalink(get_page_by_path('mentions-legales')); ?>">Mentions légales</a></li>
+                    
+                    <!-- Lien vers la page de vie privée (Politique de confidentialité) -->
+                    <li><a href="<?php echo esc_url(get_privacy_policy_url()); ?>">Vie privée</a></li>
+                    
+                    <!-- Copyright ou autre contenu du pied de page -->
+                    <li><p>Tous droits réservés</p></li>
+
+                </ul>
+
+                <?php
+        // Fonction pour le menu footer
+        wp_nav_menu( array(
+            'theme_location' => 'footer-menu',
+            'container'      => 'false',
+            'menu_class'     => 'footer-menu',
+        ) );
+        ?>
+
+
+<!-- Fonction pour appeler le template contact-modal.php -->
+<?php get_template_part('templates-part/contact-modal'); ?>
+
+
+            </nav>
+
+</div>

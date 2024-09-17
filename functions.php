@@ -1,77 +1,119 @@
 <?php
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
 
-// BEGIN ENQUEUE PARENT ACTION
-// AUTO GENERATED - Do not modify or remove comment markers above or below:
+//============================
+//   Fonctions de chargement du thème
+//============================
 
-if ( !function_exists( 'chld_thm_cfg_locale_css' ) ):
-    function chld_thm_cfg_locale_css( $uri ){
-        if ( empty( $uri ) && is_rtl() && file_exists( get_template_directory() . '/rtl.css' ) )
-            $uri = get_template_directory_uri() . '/rtl.css';
-        return $uri;
-    }
-endif;
-add_filter( 'locale_stylesheet_uri', 'chld_thm_cfg_locale_css' );
+/**
+ * Chargement des styles et scripts du thème.
+ */
+function nathalie_mota_scripts() {
+    // Chargement du fichier CSS principal du thème
+    wp_enqueue_style('nathalie-mota-style', get_template_directory_uri() . '/assets/css/style.css', array(), '1.1');
+    // Chargement de jQuery
+    wp_enqueue_script('jquery');
+ 
+     // Chargement de la modale de contact
+    wp_enqueue_script('contact-modal-js', get_template_directory_uri() . '/js/contact-modal.js', array(), time(), true); 
+    // Chargement du script de la lightbox
+    wp_enqueue_script('lightbox-js', get_stylesheet_directory_uri() . '/js/lightbox.js', array(), time(), true);
 
-if ( !function_exists( 'chld_thm_cfg_parent_css' ) ):
-    function chld_thm_cfg_parent_css() {
-        wp_enqueue_style( 'chld_thm_cfg_parent', trailingslashit( get_template_directory_uri() ) . 'style.css', array(  ) );
-    }
-endif;
-add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
+}
+add_action('wp_enqueue_scripts', 'nathalie_mota_scripts');
 
-// END ENQUEUE PARENT ACTION
+//============================
+//   Support de fonctionnalités du thème
+//============================
 
-// Ajouter le support pour les balises de titre
+/**
+ * Ajout du support des images mises en avant.
+ */
+add_theme_support('post-thumbnails');
+
+/**
+ * Ajout du support pour le titre automatique du site dans l'en-tête.
+ */
 add_theme_support('title-tag');
 
-// Enregistrer et enfiler le fichier style.css
-function enqueue_my_styles() {
-    wp_enqueue_style( 'main-style', get_stylesheet_uri() );
-}
-add_action( 'wp_enqueue_scripts', 'enqueue_my_styles' );
+//============================
+//   Enregistrement des menus
+//============================
 
-// Enregistrer le menu principal
-function register_my_menu() {
-    register_nav_menus( array(
-        'main-menu' => __( 'Menu principal', 'text-domain' ),
-    ) );
+/**
+ * Enregistrement des menus de navigation.
+ */
+function register_my_menus() {
+    register_nav_menus(
+        array(
+            'main-menu'   => __('Main Menu'),  // Menu principal
+            'footer-menu' => __('Footer Menu') // Menu pied de page
+        )
+    );
 }
-add_action( 'after_setup_theme', 'register_my_menu' );
+add_action('init', 'register_my_menus');
 
-// Ajouter des attributs title et aria-current aux éléments de menu
-function customize_menu_attributes($atts, $item, $args) {
-    // Ajouter l'attribut title
-    if (isset($item->title)) {
-        $atts['title'] = $item->title;
+
+//============================
+//            FILTRES
+//============================
+
+/**
+ * Enregistre les scripts nécessaires et localise les scripts pour la pagination et les filtres.
+ */
+function enqueue_load_more_photos_script() {
+    // Enregistrement des scripts nécessaires pour les filtres.
+    wp_enqueue_script('filtres', get_stylesheet_directory_uri() . '/js/filtres.js', array('jquery'), null, true);
+  
+  }
+  add_action('wp_enqueue_scripts', 'enqueue_load_more_photos_script');
+  
+ 
+
+//============================
+//   Requêtes et filtres personnalisés
+//============================
+
+
+
+//============================
+//   Fonction pour récupérer une image de fond aléatoire
+//============================
+
+function get_random_background_image() {
+    // Arguments de la requête pour récupérer une photo aléatoire
+    $args = array(
+        'post_type'      => 'photo',      // Type de publication : photo
+        'posts_per_page' => 1,            // Nombre de photos à récupérer (1 pour une photo aléatoire)
+        'orderby'        => 'rand',       // Tri aléatoire
+    );
+  
+    // Exécute la requête WP_Query avec les arguments
+    $photo_query = new WP_Query($args);
+  
+    // Initialise la variable pour stocker l'URL de l'image
+    $photo_url = '';
+  
+    // Vérifie s'il y a des photos dans la requête
+    if ($photo_query->have_posts()) {
+        // Boucle à travers les photos
+        while ($photo_query->have_posts()) {
+            $photo_query->the_post();
+            // Récupère l'URL de l'image mise en avant
+            $photo_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
+        }
+        // Réinitialise les données post
+        wp_reset_postdata();
     }
+  
+    // Retourne l'URL de l'image
+    return $photo_url;
+  }
 
-    // Ajouter l'attribut aria-current pour les éléments de menu actifs
-    if (in_array('current-menu-item', $item->classes) || in_array('current-menu-ancestor', $item->classes)) {
-        $atts['aria-current'] = 'page';
-    }
-
-    return $atts;
-}
-add_filter('nav_menu_link_attributes', 'customize_menu_attributes', 10, 3);
-
-// intégré js
-function enqueue_custom_scripts() {
-    wp_enqueue_script('custom-scripts', get_stylesheet_directory_uri() . '/js/contact.js', array('jquery'), null, true); 
-   
-}
-
-function mota_enqueue_scripts() {
-    wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/scripts.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'mota_enqueue_scripts');
-
+  
 function contact_btn( $items, $args ) {
-	$items .= '<a href="./contact" class="contact-btn">Nous contacter</a>';
+	$items .= '<a href="./contact" class="contact-btn" >CONTACT</a>';
 	return $items;
 }
-function enqueue_custom_modal_scripts() {
-    wp_enqueue_script('custom-modal', get_stylesheet_directory_uri() . '/js/modal.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'enqueue_custom_modal_scripts');
+
+add_filter( 'wp_nav_menu', 'contact_btn', 10, 2 );
+?>
