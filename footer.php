@@ -13,23 +13,6 @@
                     
                     <!-- Copyright ou autre contenu du pied de page -->
                     <li><p>Tous droits réservés</p></li>
-
                 </ul>
-
-                <?php
-        // Fonction pour le menu footer
-        wp_nav_menu( array(
-            'theme_location' => 'footer-menu',
-            'container'      => 'false',
-            'menu_class'     => 'footer-menu',
-        ) );
-        ?>
-
-
-<!-- Fonction pour appeler le template contact-modal.php -->
-<?php get_template_part('templates-part/contact-modal'); ?>
-
-
             </nav>
-
 </div>

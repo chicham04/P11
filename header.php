@@ -20,18 +20,14 @@
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Logo" class="site-logo">
                 </a>
             </div>
-            
-           
 
             <!-- Menu principal -->
             <nav id="site-navigation">
-            <?php
-            wp_nav_menu( array(
-                'theme_location' => 'main-menu',
-                'menu_class'     => 'main-menu', // Classe CSS pour le menu
-            ) );
-            ?>
-        </nav>
-           
- 
-    </header>
+                <?php
+                    wp_nav_menu( array(
+                        'theme_location' => 'main-menu',
+                        'menu_class'     => 'main-menu', // Classe CSS pour le menu
+                    ) );
+                 ?>
+            </nav>
+</header>

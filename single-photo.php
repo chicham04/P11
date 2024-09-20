@@ -121,15 +121,8 @@ $nextThumbnailURL = $nextPost ? get_the_post_thumbnail_url($nextPost->ID, 'thumb
           ),
         );
 
-
-
-
-
-        // Réinitialise les données globales de la publication après la boucle
-        wp_reset_postdata();
         ?>
     </div>
 </section>
-
 
 <?php get_footer(); ?>

@@ -1,11 +1,20 @@
 <?php get_header(); ?>
 
-<main id="primary" class="site-main">
-<section class="banner">
-     <img src="<?php echo get_stylesheet_directory_uri() . '/images/nathalie-11.jpeg'; ?>" alt="header image" class="hero-header">
-     <div class="event-image">
-        <img src="<?php echo get_stylesheet_directory_uri() . '/images/PHOTOGRAPHE EVENT.png'; ?>" alt="Photographe event image">
+<?php get_template_part('templates-part/hero'); ?>
+
+    <!-- Section pour les filtres -->
+    <section id="filtres-section"> 
+      <?php get_template_part('templates-part/filtres'); ?>
+    </section>
+
+    <!-- Section pour afficher la liste de photos -->
+    <section id="liste__photo" class="photo-grid">
+        <?php get_template_part('templates-part/liste-photos'); ?>
+    </section>
+
+    <div id="load-more-container">
+    <!-- Bouton pour charger plus de photos -->
+         <button id="load-more-btn" class="load-more-btn" data-offset="8">Charger plus</button>
     </div>
-</section>  
 
 <?php get_footer(); ?>
