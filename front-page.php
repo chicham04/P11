@@ -1,16 +1,22 @@
-<?php
-// Template Name: Hero Template
-// Description: Modèle d'affichage de la section héros de la page d'accueil
+<?php get_header(); ?>
 
-get_header();
+<?php get_template_part('templates-part/hero'); ?>
 
-// Récupérer l'URL de l'image d'arrière-plan aléatoire
-$background_image_url = get_random_background_image();
-?>
 
-<section class="hero" style="background-image: url('<?php echo $background_image_url; ?>');">
-    <div class="hero__content">
-        <h1>Photographie Event</h1>
-        <!-- Autres éléments de la bannière héros -->
-    </div>
-</section>
+    <!-- Section pour les filtres -->
+    <section id="filtres-section"> 
+      <?php get_template_part('templates-part/filtres'); ?>
+    </section>
+
+
+    <!-- Section pour afficher la liste de photos -->
+    <section id="liste__photo" class="photo-grid">
+        <?php get_template_part('templates-part/liste-photos'); ?>
+    </section>
+
+    <div id="load-more-container">
+    <!-- Bouton pour charger plus de photos -->
+    <button id="load-more-btn" class="load-more-btn" data-offset="8">Charger plus</button>
+</div>
+
+<?php get_footer(); ?>
