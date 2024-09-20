@@ -1,8 +1,8 @@
 <?php
 
-//============================
-//   Fonctions de chargement du thème
-//============================
+//=====================================//
+//   Fonctions de chargement du thème  //
+//====================================//
 
 /**
  * Chargement des styles et scripts du thème.
@@ -15,8 +15,6 @@ function nathalie_mota_scripts() {
  
      // Chargement de la modale de contact
     wp_enqueue_script('contact-modal-js', get_template_directory_uri() . '/js/contact-modal.js', array(), time(), true); 
-    // Chargement du script de la lightbox
-    wp_enqueue_script('lightbox-js', get_stylesheet_directory_uri() . '/js/lightbox.js', array(), time(), true);
 
 }
 add_action('wp_enqueue_scripts', 'nathalie_mota_scripts');
@@ -60,21 +58,13 @@ add_action('init', 'register_my_menus');
 /**
  * Enregistre les scripts nécessaires et localise les scripts pour la pagination et les filtres.
  */
-function enqueue_load_more_photos_script() {
+function enqueue_photos_script() {
     // Enregistrement des scripts nécessaires pour les filtres.
     wp_enqueue_script('filtres', get_stylesheet_directory_uri() . '/js/filtres.js', array('jquery'), null, true);
   
   }
-  add_action('wp_enqueue_scripts', 'enqueue_load_more_photos_script');
-  
+  add_action('wp_enqueue_scripts', 'enqueue_photos_script');
  
-
-//============================
-//   Requêtes et filtres personnalisés
-//============================
-
-
-
 //============================
 //   Fonction pour récupérer une image de fond aléatoire
 //============================
