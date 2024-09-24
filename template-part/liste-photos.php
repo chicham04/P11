@@ -1,12 +1,11 @@
 <?php
 // La boucle WordPress pour afficher les photos avec WP_Query
 $args = array(
-    'post_type' => 'photo', // Type de publication : photo
-    'posts_per_page' => 8, // Limite à 8 photos par défaut
+    'post_type' => 'photo', 
+    'posts_per_page' => 8, 
     
 );
 
-// Exécute la requête WP_Query avec les arguments
 $block__photo = new WP_Query($args);
 
 // Vérifie s'il y a des photos dans la requête
