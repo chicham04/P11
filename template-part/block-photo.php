@@ -31,7 +31,3 @@ if ($photoUrl) {
         </div>
     </div>
     <?php
-} else {
-    // Si aucune image n'est trouvée, afficher un autre contenu
-    echo '<p>Aucune image disponible pour cette publication.</p>';
-}
