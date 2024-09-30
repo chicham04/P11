@@ -121,6 +121,25 @@ $nextThumbnailURL = $nextPost ? get_the_post_thumbnail_url($nextPost->ID, 'thumb
           ),
         );
 
+        // Supprime la clause "AND (0 = 1)" de la requête SQL généré par WP
+        add_filter('posts_where', 'remove_zero_clause_from_where');
+
+        // Crée une nouvelle instance de WP_Query avec les arguments définis
+        $query = new WP_Query($args);
+        
+        // Supprime le filtre "posts_where" pour éviter d'affecter d'autres requêtes WP_Query
+        remove_filter('posts_where', 'remove_zero_clause_from_where');
+
+        // Boucle sur les publications similaires et affiche le modèle de contenu pour chaque publication
+        if ($query->have_posts()) :
+            while ($query->have_posts()) : $query->the_post(); 
+                get_template_part('templates-part/block-photo');
+            endwhile;
+        else :
+            // Affiche un message si aucune publication similaire n'a été trouvée
+            echo '<p class="photoNotFound">Pas de photo similaire trouvée pour la catégorie.</p>';
+        endif;
+        wp_reset_postdata();
         ?>
     </div>
 </section>
