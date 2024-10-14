@@ -17,29 +17,29 @@ $terms_by_taxonomy = [
 // Début du conteneur des filtres
 echo "<div class='filtres-container'>";
 
-// Section des filtres catégorie et format à gauche
-echo "<div class='filters-left'>";
+        // Section des filtres catégorie et format à gauche
+        echo "<div class='filters-left'>";
 
-// Boucle sur les taxonomies pour la section gauche (catégorie et format)
-foreach ($taxonomy_labels as $taxonomy_slug => $label) {
-    if ($taxonomy_slug !== 'annees') {
-        $terms = get_terms($taxonomy_slug);
-        if ($terms && !is_wp_error($terms)) {
-            $select_class = 'custom-select ' . $taxonomy_slug . '-select';
-            echo "<div class='taxonomy-container'>";
-            echo "<select id='$taxonomy_slug' class='$select_class'>";
-            echo "<option value=''>$label</option>";
-            foreach ($terms as $term) {
-                echo "<option value='$term->slug'>$term->name</option>";
+            // Boucle sur les taxonomies pour la section gauche (catégorie et format)
+            foreach ($taxonomy_labels as $taxonomy_slug => $label) {
+                if ($taxonomy_slug !== 'annees') {
+                    $terms = get_terms($taxonomy_slug);
+                    if ($terms && !is_wp_error($terms)) {
+                        $select_class = 'custom-select ' . $taxonomy_slug . '-select';
+                        echo "<div class='taxonomy-container'>";
+                        echo "<select id='$taxonomy_slug' class='$select_class'>";
+                        echo "<option value=''>$label</option>";
+                        foreach ($terms as $term) {
+                            echo "<option value='$term->slug'>$term->name</option>";
+                        }
+                        echo "</select>";
+                        echo "</label>";
+                        echo "</div>";
+                    }
+                }
             }
-            echo "</select>";
-            echo "</label>";
-            echo "</div>";
-        }
-    }
-}
-echo "</div>";
-echo "<div class='filters-right'>";
+        echo "</div>";
+    echo "<div class='filters-right'>";
         $terms = $terms_by_taxonomy['order'];
         echo "<div class='taxonomy-container'>";
             echo "<select id='annees' class='custom-select annees-select'>";
@@ -50,3 +50,4 @@ echo "<div class='filters-right'>";
         echo "</div>";
     echo "</div>";
 echo "</div>";
+
