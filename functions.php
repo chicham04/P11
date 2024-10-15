@@ -19,9 +19,9 @@ function nathalie_mota_scripts() {
 }
 add_action('wp_enqueue_scripts', 'nathalie_mota_scripts');
 
-//============================
-//   Support de fonctionnalités du thème
-//============================
+//========================================//
+//   Support de fonctionnalités du thème  //
+//=======================================//
 
 /**
  * Ajout du support des images mises en avant.
