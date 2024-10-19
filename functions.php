@@ -16,6 +16,10 @@ function nathalie_mota_scripts() {
      // Chargement de la modale de contact
     wp_enqueue_script('contact-modal-js', get_template_directory_uri() . '/js/contact-modal.js', array(), time(), true); 
 
+    // Enregistrer et localiser les scripts pour Select2
+    wp_enqueue_script('select2-script', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '4.1.0', true);
+    wp_enqueue_style('select2-style', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css');
+    wp_enqueue_script('select2-js', get_stylesheet_directory_uri() . '/js/select2.js', array('jquery'), '1.0.0', true);     
 }
 add_action('wp_enqueue_scripts', 'nathalie_mota_scripts');
 
