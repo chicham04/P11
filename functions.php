@@ -15,6 +15,14 @@ function nathalie_mota_scripts() {
  
      // Chargement de la modale de contact
     wp_enqueue_script('contact-modal-js', get_template_directory_uri() . '/js/contact-modal.js', array(), time(), true); 
+    // Chargement de scripts.js
+    wp_enqueue_script('scripts-js', get_template_directory_uri() . '/js/scripts.js', array(), time(), true);
+
+    // Chargement du script pour les miniatures
+    wp_enqueue_script('miniature-js', get_stylesheet_directory_uri() . '/js/miniature.js', array('jquery'), '1.0.0', true);
+
+    // Chargement du script de la lightbox
+    wp_enqueue_script('lightbox-js', get_stylesheet_directory_uri() . '/js/lightbox.js', array(), time(), true);
 
     // Enregistrer et localiser les scripts pour Select2
     wp_enqueue_script('select2-script', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '4.1.0', true);
@@ -62,7 +70,8 @@ add_action('init', 'register_my_menus');
 // Enregistre les scripts nécessaires et localise les scripts pour les filtres.
 
 function enqueue_load_more_photos_script() {
-    // Enregistrement des scripts nécessaires pour les filtres.
+    // Enregistrement des scripts nécessaires pour la pagination et les filtres.
+    wp_enqueue_script('pagination', get_stylesheet_directory_uri() . '/js/pagination.js', array('jquery'), null, true);
     wp_enqueue_script('filtres', get_stylesheet_directory_uri() . '/js/filtres.js', array('jquery'), null, true);
     // Définition des paramètres AJAX communs pour être passés aux scripts.
     $ajax_params = array(
@@ -72,12 +81,14 @@ function enqueue_load_more_photos_script() {
     
       // Localisation des scripts pour passer les paramètres AJAX aux scripts en front-end.
       wp_localize_script('filtres', 'ajax_filtres', $ajax_params);
+     // Enregistrement des scripts nécessaires pour la pagination et les filtres.
+     wp_enqueue_script('pagination', get_stylesheet_directory_uri() . '/js/pagination.js', array('jquery'), null, true);      
     }
     add_action('wp_enqueue_scripts', 'enqueue_load_more_photos_script');
     
-    /**
-     * Traite les requêtes AJAX pour charger plus de photos.
-     */
+    // 
+    //  Traite les requêtes AJAX pour charger plus de photos.
+    // 
     function load_more_photos() {
       // Vérification du nonce pour sécuriser la requête AJAX.
       check_ajax_referer('load_more_photos_nonce', 'nonce'); 
@@ -199,8 +210,11 @@ function get_random_background_image() {
     return $photo_url;
   }
 
-  
-
+  function nathalie_mota_enqueue_scripts() { 
+	wp_enqueue_script( 'nathalie_mota-custom-script', get_stylesheet_directory_uri() . '/js/script.js', array( 'jquery' ), '1.0', true );
+	//Le script dépend de jQuery dans sa version 1.0 et le script sera chargé dans le pied de page
+	} 
+	add_action( 'wp_enqueue_scripts', 'nathalie_mota_enqueue_scripts' );  
 
 function contact_btn( $items, $args ) {
 	$items .= '<a href="./contact" class="contact-btn" >CONTACT</a>';
