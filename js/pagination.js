@@ -29,4 +29,66 @@ function handleLoadResponse(response, initialOffset) {
       console.error("Erreur: Aucune donnée reçue.");
   }
 }
- 
+
+
+/**
+ * Ajoute les nouvelles photos chargées au conteneur de la liste des photos.
+ * @param {string} html - Le HTML des nouvelles photos.
+ */
+function appendPhotos(html) {
+  jQuery("#liste__photo").append(html);
+}
+
+/**
+* Cache le bouton "Charger plus" si aucune photo supplémentaire n'est disponible.
+*/
+function handleNoPhotos() {
+  jQuery("#load-more-btn").hide();
+  console.log("Aucune photo n'est disponible.");
+}
+
+// Configuration de l'événement de clic pour le bouton de chargement supplémentaire.
+jQuery(document)
+  .off("click", "#load-more-container #load-more-btn")
+  .on("click", "#load-more-container #load-more-btn", function () {
+      const currentOffset = jQuery("#load-more-btn").data("offset") || 0;
+      console.log("Bouton cliqué avec offset : " + currentOffset);
+      loadMoreContent(currentOffset);
+  });
+
+/**
+* Charge plus de contenu en utilisant AJAX en fonction de l'offset actuel et des filtres actifs.
+*/
+function loadMoreContent(offset) {
+  const ajaxurl = ajax_filtres.ajax_url;
+  const nonce = ajax_filtres.ajax_nonce;
+
+  // Récupérer les filtres actifs
+  const categorie = jQuery("#categorie").val();
+  const format = jQuery("#format").val();
+  const annees = jQuery("#annees").val();
+
+  // Utilisation d'AJAX pour charger plus de contenu
+  jQuery.ajax({
+      url: ajaxurl,
+      type: "post",
+      data: {
+          action: "load_more_photos",
+          offset: offset,
+          nonce: nonce,
+          categorie: categorie, 
+          format: format, 
+          order: annees 
+      },
+      success: function (response) {
+          handleLoadResponse(response, offset);
+      },
+      error: function (xhr, status, error) {
+          console.error("Erreur AJAX : " + status + ", détails : " + error);
+          console.error("Réponse du serveur : ", xhr.responseText);
+      }
+  });
+}
+
+// Message pour indiquer que le script a été chargé correctement.
+console.log("Le JS du bouton charger plus s'est correctement chargé");
